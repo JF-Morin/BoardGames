@@ -1,0 +1,230 @@
+:host
+    display: flex
+    position: relative
+    height: 100%
+    width: 100%
+    z-index: 0
+    overflow: hidden
+    #game-library-menu
+        position: fixed
+        display: flex
+        flex-direction: column-reverse
+        align-items: flex-end
+        justify-content: center
+        bottom: 32px
+        right: 32px
+        font-size: 2em
+        // border: 1px solid white
+        #add-btn
+            display: flex
+            align-items: center
+            justify-content: center
+            float: right
+            height: 56px
+            width: 56px
+            border-radius: 50%
+            background: white
+            -webkit-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+            -moz-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+            box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+            outline: none
+            cursor: pointer
+            .mat-icon
+                transition: all 0.2s ease
+        .add-btn-icon-rotate
+            .mat-icon
+                transform: rotate(45deg)
+        .hide-game-menu
+            transform: scaleY(0)
+        #game-menu
+            display: flex
+            flex-direction: column-reverse
+            background: transparent
+            max-height: 0
+            transition: all 0.2s ease
+            transform-origin: 0% bottom          
+            .game-menu-item
+                width: 100%
+                height: 56px
+                padding-bottom: 8px
+                .game-selector
+                    display: flex
+                    align-items: center
+                    justify-content: flex-start
+                    float: right
+                    cursor: pointer
+                    height: 100%
+                    border-radius: 28px
+                    background: white
+                    outline: none
+                    -webkit-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+                    -moz-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+                    box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+                    img
+                        margin: 0 1px
+                        height: 54px
+                        width: 54px
+                        border-radius: 50%
+                    h4
+                        font-size: 20px
+                        overflow: hidden
+                        height: 56px
+                        line-height: 56px
+                        max-width: 0
+                        transition: max-width 0.5s, padding 0.1s
+                .game-selector:hover
+                    h4
+                        padding: 0 24px 0 8px
+                        max-width: 200px
+    #game-modal
+        visibility: hidden
+        position: absolute
+        display: flex
+        align-items: center
+        justify-content: center
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
+        z-index: 10
+        .background-blur
+            position: absolute
+            -webkit-backdrop-filter: blur(10px)
+            backdrop-filter: blur(10px)
+            z-index: 10
+            height: 100%
+            width: 100%
+        #add-game-modal
+            max-height: 700px
+            z-index: 100
+            transition: all 0.2 ease
+            transform: scale(0.8)
+            .mat-card-image-description
+                max-width: 300px
+                position: relative
+                display: inline-block
+                margin-top: 16px
+                img
+                    width: calc(100% + 32px)
+                    height: auto
+                .card-description
+                    opacity: 0
+                    background: rgba(0,0,0,0)
+                    position: absolute
+                    width: 100%
+                    height: calc(100% - 32px)
+                    top: -16px
+                    left: -16px
+                    color: white
+                    padding: 16px
+                    transition: all 0.3s ease
+            .mat-card-image-description:hover
+                .card-description
+                    background: rgba(0,0,0,0.8)
+                    opacity: 1
+            .mat-card-image::after
+                content: ''
+                width: 100%
+                height: 100%
+                background: rgba(0,0,0,0.5)
+    #ongoing-games-board
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        flex-wrap: wrap
+        align-content: flex-start
+        height: 100%
+        width: 100%
+        overflow-y: scroll
+        .ongoing-game
+            position: relative
+            display: flex
+            flex-direction: column
+            margin: 16px
+            flex-basis: 170px
+            flex-grow: 1
+            max-width: 250px
+            height: 300px
+            .mat-card-header
+                display: flex
+                flex-direction: row-reverse
+                align-items: center
+                justify-content: flex-end
+                .card-avatar
+                    height: 54px
+                    width: 54px
+                    border-radius: 27px
+                .mat-card-title
+                    font-size: 16px
+            .players-list-container
+                margin-top: 16px
+                .players-list
+                    list-style-type: none
+                    padding-left: 8px
+                    .players-list-item
+                        margin-bottom: 4px
+                        display: flex
+                        width: 100%
+                        justify-content: flex-start
+                        align-items: center
+                        font-size: 16px
+                        .icon-leader
+                            color: purple
+                            margin-left: 4px
+                        .icon-ready
+                            color: green
+                            margin-right: 4px
+                        .icon-not-ready
+                            margin-right: 4px
+            .ongoing-game-actions
+                height: 100%
+                display: flex
+                align-content: flex-end
+                align-items: flex-end
+                justify-content: space-between
+                margin: 0
+                .btn-join, .btn-leave, .btn-ready, .btn-not-ready, .btn-play
+                    padding: 0px 4px
+                    margin-left: auto
+                    .mat-icon
+                        margin-right: 4px
+                .btn-join:disabled
+                    .mat-icon
+                        display: none
+                .has-started
+                    width: 100%
+                    text-align: center
+            .btn-cancel
+                position: absolute
+                padding: 0
+                right: -12px
+                top: -12px
+                height: 24px
+                width: 24px
+                border-radius: 12px
+                -webkit-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+                -moz-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+                box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75)
+                outline: none
+                transition: all 0.3 ease
+                opacity: 0
+                .mat-icon
+                    color: red
+            .btn-cancel:hover
+                opacity: 1
+    // Scroll bar
+    /* width */
+    ::-webkit-scrollbar
+        width: 10px
+    /* Track */
+    ::-webkit-scrollbar-track 
+        box-shadow: inset 0 0 5px grey
+        border-radius: 10px
+    /* Handle */
+    ::-webkit-scrollbar-thumb 
+        background: grey
+        border-radius: 5px
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover 
+        background: #FFFFFF
+    

@@ -1,0 +1,25 @@
+<app-players *ngIf="game" [players]='game.players' [gameLeaderID]='game.gameLeaderID'></app-players>
+<div *ngIf="game" class="play-area">
+    <div *ngIf="game.gameSpecific && game.gameSpecific.cardDeck" class="card-deck">
+        <div
+        *ngFor="let card of game.gameSpecific.cardDeck; let i = index"
+        class="card" [id]="'card-'+i" 
+        [style.bottom] ="card.flip ? (63-i)*2+'px' : i*2+'px'"
+        [style.left]   ="card.flip ? '416px' : '0px'"
+        [style.z-index]="card.flip ? 63-i : i"
+        (click)="flipCard(i)"
+        >
+            <div class="card-inner" [style.transform]="card.flip ? 'rotateY(180deg)' : 'rotateY(0deg)'" [id]="'card-inner-'+i">
+                <div class="card-front" [style.border]="'36px solid '+borderColor(card.front.color)">
+                    <img [src]="iconFromCategory(card.front.category)" alt="card.front.category" class="icon">
+                </div>
+                <div class="card-back">
+                    <div *ngFor="let letter of card.back.letters" class="circle-section" [style.background]="borderColor(letter.color)">
+                        <div class="section-text" [style.color]="'black'">{{letter.letter}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+

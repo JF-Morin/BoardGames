@@ -1,0 +1,114 @@
+<mat-card id="loginRegister-card">
+    <div id="loginRegister-card-container">
+        <div id="logo-spinner">
+            <img src="../../../assets/img/dice.png" alt="" id="logo">
+            <div *ngIf="loading" class="loader">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>  
+        <div *ngIf="!loading" id="loginRegister-card-slider">
+            <!-- Login section -->
+            <div id="login-section">
+                <h1 class="card-title">Board Games</h1>
+                <form [formGroup]="loginForm" (ngSubmit)='loginSubmitHandler()'>
+                    <mat-form-field>
+                        <mat-label><mat-icon>email</mat-icon>Email</mat-label>
+                        <input matInput placeholder="you@example.com" formControlName="email">
+                        <mat-error *ngIf="loginEmail.invalid && loginEmail.dirty">Some email error</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label><mat-icon>lock</mat-icon>Password</mat-label>
+                        <input matInput type="password" formControlName="password">
+                        <mat-error *ngIf="loginPassword.invalid">Some password error</mat-error>
+                    </mat-form-field>
+                    <button id="home_login_btn" mat-raised-button type='submit' [disabled]='loginForm.invalid' color="primary">Login</button>
+                </form>
+                
+                <hr>
+                <!-- <button id="connect-with-google-btn" (click)="auth.googleSignin()" mat-raised-button><img src="../../../assets/img/google_logo.png">Connect with Google</button> -->
+                <button id="home_register_btn" (click)="move(-100)" color="primary" mat-raised-button><mat-icon aria-hidden="false" aria-label="Register">person_add</mat-icon>Register</button>
+            </div>
+            <!-- Register section -->
+            <div id="register-section">
+                <h1 class="card-title">Register</h1>
+                <form [formGroup]="registerForm" (ngSubmit)="registerSubmitHandler()">
+                    <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
+                        <!-- Personal Details -->
+                        <mat-step formGroupName="personalDetails" [stepControl]="registerForm.get('personalDetails')">
+                            <ng-template matStepLabel>Personal details</ng-template>
+                            <mat-form-field>
+                                <mat-label>Name</mat-label>
+                                <input matInput formControlName="name" required>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Last Name</mat-label>
+                                <input matInput formControlName="lastName" required>
+                            </mat-form-field>
+                            <mat-radio-group aria-label="Gender" formControlName="gender" required>
+                                <mat-radio-button value="F">F</mat-radio-button>
+                                <mat-radio-button value="M">M</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Birthday</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="birthday" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi #picker></mat-datepicker>
+                            </mat-form-field>
+                            <button mat-button (click)="move(0)" color="primary" type="button" style='float:left' mat-raised-button>
+                                <mat-icon>navigate_before</mat-icon>Back
+                            </button>
+                            <button mat-button matStepperNext color="primary" type="button" style='float:right' mat-raised-button>
+                                Next<mat-icon>navigate_next</mat-icon>
+                            </button>
+                        </mat-step>
+                        <!-- Photo -->
+                        <mat-step formGroupName="photo" [optional]="true">
+                            <ng-template matStepLabel>Photo</ng-template>
+                            <div class="image-selector">
+                                <img src="../../../assets/img/mystery_person.png" id='avatar'>
+                                <div id="inputFile">
+                                    <input type="file" name="file" id="photoFile" (change)='photoToUpload($event)' accept=".png,.jpg"/>
+                                    <label for='photoFile'><mat-icon>photo</mat-icon>Choose a photo</label>
+                                </div>
+                            </div>
+                            <button mat-button matStepperPrevious color="primary" type="button" style='float:left' mat-raised-button>
+                                <mat-icon>navigate_before</mat-icon>Back
+                            </button>
+                            <button mat-button matStepperNext color="primary" type="button" style='float:right' mat-raised-button>
+                                Next<mat-icon>navigate_next</mat-icon>
+                            </button>
+                        </mat-step>
+                        <!-- Email & password -->
+                        <mat-step formGroupName="emailPassword" [stepControl]="registerForm.get('emailPassword')">
+                            <ng-template matStepLabel>Email and password</ng-template>
+                            <mat-form-field>
+                                <mat-label><mat-icon>email</mat-icon>Email</mat-label>
+                                <input matInput placeholder="you@example.com" formControlName="email" required>
+                                <mat-error *ngIf="registerEmail.invalid && registerEmail.dirty">Invalid email</mat-error>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label><mat-icon>lock</mat-icon>Password</mat-label>
+                                <input matInput type="password" formControlName="password" required>
+                                <mat-error *ngIf="registerPassword.invalid && registerPassword.dirty">Invalid password (must contain at least 6 characters and 1 digit)</mat-error>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label><mat-icon>lock</mat-icon>Confirm Password</mat-label>
+                                <input matInput type="password" appMismatchValidator='password' formControlName="confirmPassword" required>
+                                <mat-error *ngIf="registerConfirmPassword.errors?.mismatch && registerConfirmPassword.dirty">Password mismatch</mat-error>
+                            </mat-form-field>
+                            <button mat-button matStepperPrevious color="primary" type="button" style='float:left' mat-raised-button>
+                                <mat-icon>navigate_before</mat-icon>Back
+                            </button>
+                            <button mat-button color="primary" type='submit' style='float:right' [disabled]="registerConfirmPassword.errors?.mismatch || !registerConfirmPassword.touched" mat-raised-button>
+                                Done<mat-icon>done</mat-icon>
+                            </button>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+                </form>
+            </div>
+        </div>
+    </div>
+</mat-card>
+

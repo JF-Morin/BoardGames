@@ -1,0 +1,13 @@
+<h1>Board Games</h1>
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button (click)="showProfile()" mat-menu-item><mat-icon>settings</mat-icon>Profile</button>
+  <button (click)="signOut()" mat-menu-item><mat-icon>exit_to_app</mat-icon>Sign Out</button>
+</mat-menu>
+<img *ngIf="user" [src]="user.photoURL" alt="" class="avatar">
+<h3 *ngIf="user" class="userName">
+    {{user.displayName}}
+</h3>
+<app-profile id="profile"></app-profile>

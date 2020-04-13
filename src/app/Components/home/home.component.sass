@@ -1,0 +1,158 @@
+:host
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 100vh
+    #loginRegister-card
+        height: auto
+        width: 30%
+        width: 400px
+        min-width: 300px
+        text-align: center
+        padding: 30px 60px
+        transition: 0.5s
+        #logo-spinner
+            margin: 4px
+            z-indez: 0
+            height: 128px
+            #logo
+                z-index: 1
+                position: absolute
+                left: calc(50% - 100px)
+                margin-top: 6px
+            .loader
+                // visibility: hidden
+                z-index: 0
+                position: absolute
+                left: calc(50% - 64px)
+                width: 128px
+                height: 128px
+                border-radius: 50%
+                perspective: 800px
+                .inner
+                    position: absolute
+                    box-sizing: border-box
+                    width: 100%
+                    height: 100%
+                    border-radius: 50%
+                .one
+                    left: 0%
+                    top: 0%
+                    animation: rotate-one 1s linear infinite
+                    border-bottom: 3px solid black
+                .two
+                    right: 0%
+                    top: 0%
+                    animation: rotate-two 1s linear infinite
+                    border-right: 3px solid black
+                .three
+                    right: 0%
+                    bottom: 0%
+                    animation: rotate-three 1s linear infinite
+                    border-top: 3px solid black
+        #loginRegister-card-container
+            height: 100%
+            width: 400px
+            overflow-x: hidden
+            #loginRegister-card-slider
+                position: relative
+                display: flex
+                height: auto
+                width: 200%
+                transition: 0.3s
+                #login-section, #register-section
+                    width: 400px
+                    height: 100%
+                    padding: 16px 4px
+                #login-section
+                    .card-title, .mat-form-field, .mat-raised-button
+                        margin: 8px 0
+                        width: 100%
+                        .mat-icon
+                            margin-right: 8px
+                    hr
+                        border: 1px solid grey
+                        margin: 8px 0
+                    button
+                        .mat-icon, img
+                            margin-right: 8px
+                #register-section
+                    .card-title, .mat-form-field
+                        margin: 8px 0
+                        width: 100%
+                        .mat-icon
+                            margin-right: 8px
+                    .mat-radio-button
+                        margin-left: 16px
+                    .image-selector
+                        display: flex
+                        flex-direction: column
+                        align-items: center
+                        padding: 16px 0
+                        #avatar
+                            margin: 0 0 16px 0
+                            height: 150px
+                            width: 150px
+                            border: 3px solid grey
+                            border-radius: 50%
+                        #inputFile
+                            position: relative
+                            // overflow: hidden
+                            display: inline-block
+                            label
+                                height: 36px
+                                width: auto
+                                box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)
+                                background-color: #3f51b5
+                                color: white
+                                box-sizing: border-box
+                                position: relative
+                                -webkit-user-select: none
+                                -moz-user-select: none
+                                -ms-user-select: none
+                                user-select: none
+                                cursor: pointer
+                                outline: none
+                                border: none
+                                -webkit-tap-highlight-color: transparent
+                                display: inline-block
+                                white-space: nowrap
+                                text-decoration: none
+                                vertical-align: middle
+                                text-align: center
+                                margin: 0
+                                min-width: 64px
+                                line-height: 36px
+                                padding: 0 16px
+                                border-radius: 4px
+                                overflow: visible
+                                transform: translate3d(0, 0, 0)
+                                transition: background 400ms cubic-bezier(0.25, 0.8, 0.25, 1),box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)
+                                .mat-icon
+                                    display: inline
+                                    margin: 6px 8px
+                                    vertical-align: middle
+                            input[type=file]
+                                position: absolute
+                                left: 0
+                                top: 0
+                                opacity: 0
+
+
+@keyframes rotate-one 
+  0% 
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg)
+  100%
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg)
+
+@keyframes rotate-two
+  0%
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg)
+  100%
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg)
+
+@keyframes rotate-three
+  0%
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg)
+  100%
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg)

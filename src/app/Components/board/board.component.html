@@ -1,0 +1,84 @@
+
+<div *ngIf="ongoingGames && gameLibrary && users" id="ongoing-games-board">
+    <mat-card *ngFor="let ongoingGame of ongoingGames.sort(orderBy('createdAt', 'asc'))" class="ongoing-game">
+        <mat-card-header>
+            <img class="card-avatar" [src]="(ongoingGame.libraryGameID | doc : gameLibrary)?.photoURL">
+            <mat-card-title><b>{{(ongoingGame.libraryGameID | doc : gameLibrary)?.title}}</b></mat-card-title>
+            <mat-card-subtitle>{{ongoingGame.createdAt}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="players-list-container">
+          <ul class="players-list">
+            <li class="players-list-item"><b>Players</b></li>
+            <li *ngFor="let player of ongoingGame.players" class="players-list-item" [style.background]="user && (player.userID === user.id) ? 'rgba(0,0,0,0.2)' : 'transparent'">
+              <mat-icon *ngIf="player.readyToStart" class="icon-ready" matTooltip="Ready">how_to_reg</mat-icon>
+              <mat-icon *ngIf="!player.readyToStart" class="icon-not-ready" matTooltip="Not ready">person</mat-icon>
+              <p>{{(player.userID | doc : users)?.displayName}}</p>
+              <mat-icon *ngIf="player.userID === ongoingGame.gameLeaderID" class="icon-leader" matTooltip="Game leader">star</mat-icon>
+            </li>
+          </ul>
+        </mat-card-content>
+        <mat-card-actions class="ongoing-game-actions">
+            <div *ngIf="!ongoingGame.start" class="btn-ready-not-ready">
+                <button mat-button *ngIf="user && ongoingGame && (user | hasJoinedGame : ongoingGame) && !(user | isReady : ongoingGame)" class='btn-ready' (click)='ongoingGameReadyBtn(ongoingGame)'>
+                    <mat-icon>done</mat-icon>Ready
+                </button>
+                <button mat-button *ngIf="user && ongoingGame && (user | hasJoinedGame : ongoingGame) && (user | isReady : ongoingGame)" class='btn-not-ready' (click)='ongoingGameNotReadyBtn(ongoingGame)'>
+                    <mat-icon>not_interested</mat-icon>Not ready
+                </button>
+            </div>
+            <div *ngIf="!ongoingGame.start" class="btn-join-leave-play">
+                <button mat-button *ngIf="user && ongoingGame && !(user | hasJoinedGame : ongoingGame) && !(user | isLeader : ongoingGame)" [disabled]="ongoingGame.players?.length >= (ongoingGame.libraryGameID | doc : gameLibrary )?.maxPlayers" class='btn-join' (click)='ongoingGameJoinBtn(ongoingGame)'>
+                    <mat-icon>sentiment_very_satisfied</mat-icon>{{ ongoingGame.players?.length >= (ongoingGame.libraryGameID | doc : gameLibrary)?.maxPlayers ? 'Full' : 'Join'}}
+                </button>
+                <button mat-button *ngIf="user && ongoingGame && (user | hasJoinedGame : ongoingGame) && !(user | isLeader: ongoingGame)" class='btn-leave' (click)='ongoingGameLeaveBtn(ongoingGame)'>
+                    <mat-icon>sentiment_very_dissatisfied</mat-icon>Leave
+                </button>
+                <button mat-button *ngIf="user && ongoingGame && (user | isLeader: ongoingGame)" [disabled]="ongoingGame.players?.length < (ongoingGame.libraryGameID | doc : gameLibrary)?.minPlayers || !(ongoingGame | playerAllReady)" class='btn-play' (click)='ongoingGamePlayBtn(ongoingGame)'>
+                    <mat-icon>play_arrow</mat-icon>Play
+                </button>
+            </div>
+            <div *ngIf="ongoingGame.start" class="has-started">This game has started</div>
+        </mat-card-actions>
+        <button *ngIf="user && ongoingGame && (user | isLeader: ongoingGame) && !ongoingGame.start" class='btn-cancel' (click)='ongoingGameCancelBtn(ongoingGame)'>
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-card>
+</div>
+<div *ngIf="user" id="game-library-menu">
+    <button id="add-btn" (click)="addBtnClick()" [disabled]='user.inGame ? true : false'><mat-icon>add</mat-icon></button>
+    <div id="game-menu" class='hide-game-menu'>
+        <div class='game-menu-item' *ngFor="let game of gameLibrary" >
+            <div class="game-selector" (click)='modalNewGame(game)'>
+                <img [src]="game.photoURL">
+                <h4>{{game.title}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="selectedGameToAdd" id="game-modal">
+    <div class="background-blur"></div>
+    <mat-card id="add-game-modal">
+        <mat-card-header>
+          <mat-card-title>{{selectedGameToAdd.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mat-card-image-description">
+            <img mat-card-image [src]="selectedGameToAdd.photoURL">
+            <div class="card-description">{{selectedGameToAdd.description}}</div>
+        </mat-card-content>
+        
+        <mat-card-content>
+            <p>
+                Players: {{selectedGameToAdd.minPlayers}} - {{selectedGameToAdd.maxPlayers}}
+            </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="addGameModalCreate()"><mat-icon>add_circle</mat-icon>Create</button>
+          <button mat-button color="warn" (click)="addGameModalCancel()"><mat-icon>cancel</mat-icon>Cancel</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+
+    
+    
+

@@ -1,0 +1,11 @@
+<div *ngFor="let player of players" class="player">
+    <img *ngIf="users" [src]="(player.userID | doc : users)?.photoURL" alt="" class="player-avatar">
+    <div *ngIf="users" class="player-info">
+        <h3 *ngIf="users">
+            <mat-icon *ngIf="player.userID === gameLeaderID" class="icon-leader" color="purple" matTooltip="Game leader">star</mat-icon>
+            {{(player.userID | doc : users)?.displayName}}
+        </h3>
+        <div class="info">Score: {{player.score}}</div>
+    </div>
+</div>
+
